@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Restaurante.Model.Mesas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1><center>Lista de Mesas</center></h1>
+<hr />
+<p>
+    <a asp-action="Create">Agregar Mesa</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { Id=item.Id }) |
+                @Html.ActionLink("Detalles", "Details", new { Id=item.Id }) |
+                @Html.ActionLink("Deshabilitar", "Deshabilitar", new{Id = item.Id})|
+                @Html.ActionLink("Habilitar", "Habilitar", new{Id = item.Id})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
