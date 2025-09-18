@@ -2,50 +2,46 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "iniciar sesión";
+    ViewData["Title"] = "Iniciar sesión";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">@ViewData["Title"]</h2>
             <form id="account" method="post">
-                <h2>Usa una cuenta local para ingresar.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
-                    <input asp-for="Input.UserName" class="form-control"/>
-                    <label asp-for="Input.UserName" class="form-label"></label>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.UserName" class="form-control" placeholder="Usuario" />
+                    <label asp-for="Input.UserName">Usuario</label>
                     <span asp-validation-for="Input.UserName" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                    <label asp-for="Input.Password" class="form-label"></label>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Contraseña" />
+                    <label asp-for="Input.Password">Contraseña</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div>
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">
+                        Recordarme
+                    </label>
                 </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Ingresar</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Cambiar contraseña</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrar un nuevo usuario</a>
-                    </p>
+
+                <button id="login-submit" type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Ingresar
+                </button>
+
+                <div class="d-flex justify-content-between small">
+                    <a id="forgot-password" asp-page="./ForgotPassword">Cambiar contraseña</a>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrar nuevo usuario</a>
                 </div>
             </form>
-        </section>
+        </div>
     </div>
-   
 </div>
 
 @section Scripts {

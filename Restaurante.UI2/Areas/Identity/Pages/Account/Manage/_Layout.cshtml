@@ -9,17 +9,29 @@
     }
 }
 
-<h1>Gestiona tu cuenta</h1>
+<div class="container my-5">
+    <h1 class="mb-4 text-center">Gestiona tu cuenta</h1>
 
-<div>
-    <h2>Cambiar la configuración de su cuenta</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="h5 mb-3">Cambiar la configuración de tu cuenta</h2>
+            <hr />
+
+            <div class="row">
+                <!-- Navegación lateral -->
+                <div class="col-md-3 mb-3 mb-md-0">
+                    <div class="list-group shadow-sm rounded">
+                        <partial name="_ManageNav" />
+                    </div>
+                </div>
+
+                <!-- Contenido principal -->
+                <div class="col-md-9">
+                    <div class="p-3 border rounded shadow-sm bg-white">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

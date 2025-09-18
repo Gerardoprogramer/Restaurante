@@ -1,24 +1,32 @@
 ﻿@page
 @model ResetAuthenticatorModel
 @{
-    ViewData["Title"] = "Reset authenticator key";
+    ViewData["Title"] = "Reconfigurar clave de autenticación";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
-<div class="alert alert-warning" role="alert">
-    <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
-    </p>
-    <p>
-        This process disables 2FA until you verify your authenticator app.
-        If you do not complete your authenticator app configuration you may lose access to your account.
-    </p>
-</div>
-<div>
-    <form id="reset-authenticator-form" method="post">
-        <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Reset authenticator key</button>
-    </form>
+<div class="container my-5">
+    <h3 class="text-center mb-4">@ViewData["Title"]</h3>
+    <partial name="_StatusMessage" for="StatusMessage" />
+
+    <div class="card shadow-sm p-4">
+        <div class="alert alert-warning d-flex align-items-start" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-3"></i>
+            <div>
+                <p class="mb-2">
+                    <strong>Si reinicias tu clave de autenticación, tu aplicación autenticadora dejará de funcionar hasta que la reconfigures.</strong>
+                </p>
+                <p class="mb-0">
+                    Este proceso desactiva la autenticación de dos factores hasta que verifiques tu aplicación autenticadora.
+                    Si no completas la configuración, podrías perder acceso a tu cuenta.
+                </p>
+            </div>
+        </div>
+
+        <form id="reset-authenticator-form" method="post" class="text-center mt-3">
+            <button id="reset-authenticator-button" class="btn btn-danger btn-lg">
+                <i class="bi bi-arrow-repeat me-1"></i> Reiniciar clave de autenticación
+            </button>
+        </form>
+    </div>
 </div>
