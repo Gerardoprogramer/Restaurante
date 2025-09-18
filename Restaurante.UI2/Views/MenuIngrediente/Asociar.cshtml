@@ -1,50 +1,70 @@
 ﻿@model Restaurante.Model.AsociarAlMenu
 
 @{
-    ViewData["Title"] = "Asociar";
+    ViewData["Title"] = "Asociar Platillo al Menú";
 }
-<h1><center>Asociar platillo al menu</center></h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Asociar">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
 
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0"><i class="bi bi-plus-circle"></i> Asociar Platillo al Menú</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Asociar" id="asociarForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="form-group">
-                <label asp-for="idIngrediente" class="control-label"></label>
-                 @Html.DropDownList("idIngrediente", new SelectList(ViewBag.ListaDeIngredientes, "Id", "Nombre"), new{@class = "form-control input-lg"})
+                        <!-- Ingrediente -->
+                        <div class="mb-3">
+                            <label asp-for="idIngrediente" class="form-label fw-bold"></label>
+                            @Html.DropDownList("idIngrediente", new SelectList(ViewBag.ListaDeIngredientes, "Id", "Nombre"), 
+                                new { @class = "form-select form-select-lg" })
+                        </div>
+
+                        <!-- Medida -->
+                        <div class="mb-3">
+                            <label asp-for="idMedidas" class="form-label fw-bold"></label>
+                            @Html.DropDownList("idMedidas", new SelectList(ViewBag.ListaDeMedidas, "Id", "Nombre"), 
+                                new { @class = "form-select form-select-lg" })
+                        </div>
+
+                        <!-- Cantidad -->
+                        <div class="mb-3">
+                            <label asp-for="Cantidad" class="form-label fw-bold"></label>
+                            <input asp-for="Cantidad" class="form-control form-control-lg" placeholder="Ingrese la cantidad" />
+                            <span asp-validation-for="Cantidad" class="text-danger"></span>
+                        </div>
+
+                        <!-- Valor -->
+                        <div class="mb-3">
+                            <label asp-for="Valor" class="form-label fw-bold"></label>
+                            <input asp-for="Valor" class="form-control form-control-lg" placeholder="Ingrese el valor aproximado" />
+                            <span asp-validation-for="Valor" class="text-danger"></span>
+                        </div>
+
+                        <input asp-for="idMenu" type="hidden" id="idMenu" />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Asociar
+                            </button>
+                            <a asp-action="IndexDelMenu" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-arrow-left-circle"></i> Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="idMedidas" class="control-label"></label>
-                @Html.DropDownList("idMedidas", new SelectList(ViewBag.ListaDeMedidas, "Id", "Nombre"), new{@class = "form-control input-lg"})
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" />
-                <span asp-validation-for="Cantidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Valor" class="control-label"></label>
-                <input asp-for="Valor" class="form-control" />
-                <span asp-validation-for="Valor" class="text-danger"></span>
-            </div>
-            <br />
-          
-            <div class="form-group">
-                <input type="submit" value="Asociar" class="btn btn-primary" />
-                <input asp-for="idMenu" class="form-control" type="hidden" id="id"/>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-<script>
-    document.getElementById("id").value = @ViewBag.id;
-</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        // Asignar el id del menú al hidden input
+        document.getElementById("idMenu").value = @ViewBag.id;
+    </script>
 }

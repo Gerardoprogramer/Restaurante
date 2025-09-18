@@ -40,7 +40,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        // Validación simple en tiempo real (opcional)
         document.addEventListener('DOMContentLoaded', function () {
             const nombreInput = document.querySelector('#Nombre');
             nombreInput.addEventListener('input', function () {

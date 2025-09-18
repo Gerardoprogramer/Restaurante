@@ -1,24 +1,40 @@
 ﻿@model Restaurante.Model.ServirOrden
 
 @{
-    ViewData["Title"] = "ServirMesa";
+    ViewData["Title"] = "Servir Mesa";
 }
 
-<h4>Servir Orden</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ServirMesa">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="id" class="control-label"></label>
-                 @Html.DropDownList("idMenu", new SelectList(ViewBag.ListaDeMenus, "Id", "Nombre"), new{@class = "form-control input-lg"})
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white text-center">
+                    <h4 class="mb-0"><i class="bi bi-bag-check"></i> Servir Orden</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ServirMesa" id="servirForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Selección de Menú -->
+                        <div class="mb-3">
+                            <label asp-for="id" class="form-label fw-bold">Seleccione el Platillo:</label>
+                            @Html.DropDownList("idMenu", new SelectList(ViewBag.ListaDeMenus, "Id", "Nombre"), 
+                                new { @class = "form-select form-select-lg" })
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Servir
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-arrow-left-circle"></i> Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Servir" class="btn btn-primary" />     <a asp-action="Index">Volver</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
