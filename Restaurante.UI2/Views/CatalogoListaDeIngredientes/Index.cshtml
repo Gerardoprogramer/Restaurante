@@ -24,7 +24,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@if (Model != null && Model.Any()){
+    @foreach (var item in Model) {
             <tr>
                 <td>
 
@@ -44,7 +45,13 @@
             </td>
         </tr>
 
-}
+}}else{
+        <tr>
+            <td colspan="4">No hay ingredientes asociados a este platillo.</td>
+        </tr>
+        }
+        <tr>
+            <td colspan="4" style="text-align:center">
 
 @Html.ActionLink("Asociar", "Details","MenuIngrediente",  new { id = idMenus})
 

@@ -10,6 +10,12 @@ namespace Restaurante.UI.Controllers
     [Authorize]
     public class MenuIngredienteController : Controller
     {
+
+        private readonly string _apiBaseUrl;
+        public MenuIngredienteController(IConfiguration configuration)
+        {
+            _apiBaseUrl = configuration.GetValue<string>("ApiBaseUrl");
+        }
         // GET: MenuIngredienteController
         public ActionResult Index()
         {
@@ -23,7 +29,7 @@ namespace Restaurante.UI.Controllers
             {
                 var httpClient = new HttpClient();
 
-                var response = await httpClient.GetAsync("https://restaurantesi.azurewebsites.net/api/CatalogoDeIngredientesDelMenu/ObTengaElCatalogoDeLosIngredienteDelMenu");
+                var response = await httpClient.GetAsync($"{_apiBaseUrl}/api/CatalogoDeIngredientesDelMenu/ObTengaElCatalogoDeLosIngredienteDelMenu");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 laListaDeIngredientes = JsonConvert.DeserializeObject<List<Restaurante.Model.CatalogoDeIngredienteDelMenu>>(apiResponse);
 
@@ -52,7 +58,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/CatalogoListaDeIngredientes/ObTengaElCatalogoDeLaListaDeIngredientes", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/CatalogoListaDeIngredientes/ObTengaElCatalogoDeLaListaDeIngredientes", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 laListaDeIngredientes = JsonConvert.DeserializeObject<List<Restaurante.Model.CatalogoListaDeIngredientes>>(apiResponse);
@@ -84,7 +90,7 @@ namespace Restaurante.UI.Controllers
 
                 var httpClient = new HttpClient();
 
-                var response = await httpClient.GetAsync("https://restaurantesi.azurewebsites.net/api/MenuIngrediente/ObtengaElMenu");
+                var response = await httpClient.GetAsync($"{_apiBaseUrl}/api/MenuIngrediente/ObtengaElMenu");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 AsociarAlMenu = JsonConvert.DeserializeObject<Restaurante.Model.AsociarAlMenu>(apiResponse);
                 AsociarAlMenu.idMenu = id;
@@ -127,7 +133,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PostAsync("https://restaurantesi.azurewebsites.net/api/MenuIngrediente/AgregueAlMenuDeIngredientes", byteContent);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/MenuIngrediente/AgregueAlMenuDeIngredientes", byteContent);
 
                 return RedirectToAction(nameof(IndexDelMenu));
             }
@@ -175,7 +181,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync("https://restaurantesi.azurewebsites.net/api/MenuIngrediente/Desasociar", byteContent);
+                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"{_apiBaseUrl}/api/MenuIngrediente/Desasociar", byteContent);
 
             }
 

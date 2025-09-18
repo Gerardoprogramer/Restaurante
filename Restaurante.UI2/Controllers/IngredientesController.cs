@@ -10,6 +10,13 @@ namespace Restaurante.UI.Controllers
     [Authorize]
     public class IngredientesController : Controller
     {
+
+        private readonly string _apiBaseUrl;
+
+        public IngredientesController(IConfiguration configuration)
+        {
+            _apiBaseUrl = configuration.GetValue<string>("ApiBaseUrl");
+        }
         // GET: IngredientesController
         public async Task<IActionResult> Index()
         {
@@ -18,7 +25,7 @@ namespace Restaurante.UI.Controllers
             {
                 var httpClient = new HttpClient();
 
-                var response = await httpClient.GetAsync("https://restaurantesi.azurewebsites.net/api/Ingredientes/ObtengaLaListaDeIngredientes");
+                var response = await httpClient.GetAsync($"{_apiBaseUrl}/api/Ingredientes/ObtengaLaListaDeIngredientes");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 laListaDeIngredientes = JsonConvert.DeserializeObject<List<Restaurante.Model.Ingredientes>>(apiResponse);
 
@@ -46,7 +53,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Ingredientes/ObtenerPorIdElIngrediente", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Ingredientes/ObtenerPorIdElIngrediente", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 elIngrediente = JsonConvert.DeserializeObject<Restaurante.Model.DetalleIngrediente>(apiResponse);
@@ -93,7 +100,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PostAsync("https://restaurantesi.azurewebsites.net/api/Ingredientes", byteContent);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/Ingredientes", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -119,7 +126,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Ingredientes/ObtenerPorIdElIngrediente", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Ingredientes/ObtenerPorIdElIngrediente", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
 
@@ -153,7 +160,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PutAsync("https://restaurantesi.azurewebsites.net/api/Ingredientes/EditarElIngrediente", byteContent);
+                await httpClient.PutAsync($"{_apiBaseUrl}/api/Ingredientes/EditarElIngrediente", byteContent);
 
 
                 return RedirectToAction(nameof(Index));

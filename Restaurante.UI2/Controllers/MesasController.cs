@@ -10,6 +10,12 @@ namespace Restaurante.UI.Controllers
     [Authorize]
     public class MesasController : Controller
     {
+        private readonly string _apiBaseUrl;
+
+        public MesasController(IConfiguration configuration)
+        {
+            _apiBaseUrl = configuration.GetValue<string>("ApiBaseUrl");
+        }
         // GET: MesasController
         public async Task<IActionResult> Index()
         {
@@ -18,7 +24,7 @@ namespace Restaurante.UI.Controllers
             {
                 var httpClient = new HttpClient();
 
-                var response = await httpClient.GetAsync("https://restaurantesi.azurewebsites.net/api/Mesas/ObtengaLaListaDeMesas");
+                var response = await httpClient.GetAsync($"{_apiBaseUrl}/api/Mesas/ObtengaLaListaDeMesas");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 LaListaDeMesas = JsonConvert.DeserializeObject<List<Restaurante.Model.Mesas>>(apiResponse);
 
@@ -46,7 +52,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = Id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Mesas/ObtenerPorIdLaMesa", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Mesas/ObtenerPorIdLaMesa", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 laMesa = JsonConvert.DeserializeObject<Restaurante.Model.Mesas>(apiResponse);
@@ -91,7 +97,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PostAsync("https://restaurantesi.azurewebsites.net/api/Mesas/AgregarMesa", byteContent);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/Mesas/AgregarMesa", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -117,7 +123,7 @@ namespace Restaurante.UI.Controllers
                     ["Id"] = Id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Mesas/ObtenerPorIdLaMesa", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Mesas/ObtenerPorIdLaMesa", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
 
@@ -151,7 +157,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PutAsync("https://restaurantesi.azurewebsites.net/api/Mesas/EditarlaMesa", byteContent);
+                await httpClient.PutAsync($"{_apiBaseUrl}/api/Mesas/EditarlaMesa", byteContent);
 
 
                 return RedirectToAction(nameof(Index));
@@ -179,7 +185,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync("https://restaurantesi.azurewebsites.net/api/Mesas/ReservarMesa", byteContent);
+                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"{_apiBaseUrl}/api/Mesas/ReservarMesa", byteContent);
 
             }
 
@@ -209,7 +215,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync("https://restaurantesi.azurewebsites.net/api/Mesas/DisponibilidadDeMesa", byteContent);
+                HttpResponseMessage httpResponseMessage = await httpClient.PutAsync($"{_apiBaseUrl}/api/Mesas/DisponibilidadDeMesa", byteContent);
 
             }
 

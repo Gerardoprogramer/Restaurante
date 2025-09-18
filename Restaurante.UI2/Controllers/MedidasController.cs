@@ -10,6 +10,15 @@ namespace Restaurante.UI.Controllers
     [Authorize]
     public class MedidasController : Controller
     {
+
+        private readonly string _apiBaseUrl;
+
+        public MedidasController(IConfiguration configuration)
+        {
+            _apiBaseUrl = configuration.GetValue<string>("ApiBaseUrl");
+        }
+
+
         // GET: MedidasController
         public async Task<IActionResult> Index(string nombre)
         {
@@ -25,7 +34,7 @@ namespace Restaurante.UI.Controllers
 
                         ["nombre"] = Model.CargaDeDatosMedidas.Taza.ToString()
                     };
-                    var urlTaza = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtengaLaMedidaPorNombre", Taza);
+                    var urlTaza = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtengaLaMedidaPorNombre", Taza);
                     var responderTaza = await httpClient.GetAsync(urlTaza);
                     string apiResponderTaza = await responderTaza.Content.ReadAsStringAsync();
                     laMedida = JsonConvert.DeserializeObject<Restaurante.Model.Medidas>(apiResponderTaza);
@@ -43,7 +52,7 @@ namespace Restaurante.UI.Controllers
 
                         ["nombre"] = Model.CargaDeDatosMedidas.Pizca.ToString()
                     };
-                    var urlPizca = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtengaLaMedidaPorNombre", Pizca);
+                    var urlPizca = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtengaLaMedidaPorNombre", Pizca);
                     var responderPizca = await httpClient.GetAsync(urlPizca);
                     string apiResponderPizca = await responderPizca.Content.ReadAsStringAsync();
                     laMedida = JsonConvert.DeserializeObject<Restaurante.Model.Medidas>(apiResponderPizca);
@@ -61,7 +70,7 @@ namespace Restaurante.UI.Controllers
 
                         ["nombre"] = Model.CargaDeDatosMedidas.Cuchara.ToString()
                     };
-                    var urlCuchara = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtengaLaMedidaPorNombre", Cuchara);
+                    var urlCuchara = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtengaLaMedidaPorNombre", Cuchara);
                     var responderCuchara = await httpClient.GetAsync(urlCuchara);
                     string apiResponderCuchara = await responderCuchara.Content.ReadAsStringAsync();
                     laMedida = JsonConvert.DeserializeObject<Restaurante.Model.Medidas>(apiResponderCuchara);
@@ -79,7 +88,7 @@ namespace Restaurante.UI.Controllers
 
                         ["nombre"] = Model.CargaDeDatosMedidas.Litro.ToString()
                     };
-                    var urlLitro = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtengaLaMedidaPorNombre", Litro);
+                    var urlLitro = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtengaLaMedidaPorNombre", Litro);
                     var responderLitro = await httpClient.GetAsync(urlLitro);
                     string apiResponderLitro = await responderLitro.Content.ReadAsStringAsync();
                     laMedida = JsonConvert.DeserializeObject<Restaurante.Model.Medidas>(apiResponderLitro);
@@ -97,7 +106,7 @@ namespace Restaurante.UI.Controllers
 
                         ["nombre"] = Model.CargaDeDatosMedidas.Mililitros.ToString()
                     };
-                    var urlMililitros = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtengaLaMedidaPorNombre", Mililitros);
+                    var urlMililitros = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtengaLaMedidaPorNombre", Mililitros);
                     var responderMililitros = await httpClient.GetAsync(urlMililitros);
                     string apiResponderMililitros = await responderMililitros.Content.ReadAsStringAsync();
                     laMedida = JsonConvert.DeserializeObject<Restaurante.Model.Medidas>(apiResponderMililitros);
@@ -110,7 +119,7 @@ namespace Restaurante.UI.Controllers
                         Create(Medida);
                     }
 
-                    var response = await httpClient.GetAsync("https://restaurantesi.azurewebsites.net/api/Medidas/ObtengaLaListaDeMedidas");
+                    var response = await httpClient.GetAsync($"{_apiBaseUrl}/api/Medidas/ObtengaLaListaDeMedidas");
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     laListaDeMedidas = JsonConvert.DeserializeObject<List<Restaurante.Model.Medidas>>(apiResponse);
                 }
@@ -122,7 +131,7 @@ namespace Restaurante.UI.Controllers
                         ["nombre"] = nombre
                     };
 
-                    var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObTengaLasMedidasPorNombre", query);
+                    var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObTengaLasMedidasPorNombre", query);
                     var response = await httpClient.GetAsync(uri);
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     laListaDeMedidas = JsonConvert.DeserializeObject<List<Restaurante.Model.Medidas>>(apiResponse);
@@ -152,7 +161,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtenerPorIdLaMedida", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtenerPorIdLaMedida", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 laMedida = JsonConvert.DeserializeObject<Restaurante.Model.Medidas>(apiResponse);
@@ -197,7 +206,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PostAsync("https://restaurantesi.azurewebsites.net/api/Medidas", byteContent);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/Medidas", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -223,7 +232,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/Medidas/ObtenerPorIdLaMedida", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/Medidas/ObtenerPorIdLaMedida", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
 
@@ -257,7 +266,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PutAsync("https://restaurantesi.azurewebsites.net/api/Medidas/Editar", byteContent);
+                await httpClient.PutAsync($"{_apiBaseUrl}/api/Medidas/Editar", byteContent);
 
 
                 return RedirectToAction(nameof(Index));

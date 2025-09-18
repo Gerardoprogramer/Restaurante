@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "IndexDelMenu";
 }
-<h1><center>Platillos del Menu</center></h1>
+<h1>
+    <center>Platillos del Menu</center>
+</h1>
 <hr />
 <table class="table">
     <thead>
@@ -21,21 +23,31 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GananciasAproximadas)
-            </td>
-            <td>
-                @Html.ActionLink("Ingredientes", "IndexListaIngredientes", new { id=item.Id_MenuIngrediente, Nombre = item.Nombre})
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GananciasAproximadas)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Ingredientes", "IndexListaIngredientes", new { id=item.Id_MenuIngrediente, Nombre =
+                        item.Nombre})
             </td>
         </tr>
-}
+                }
+}else
+{
+            <tr>
+                <td colspan="4">No hay platillos disponibles.</td>
+            </tr>
+        }
     </tbody>
 </table>

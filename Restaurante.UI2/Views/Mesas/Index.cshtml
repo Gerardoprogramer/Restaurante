@@ -21,7 +21,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@if (Model != null && Model.Any()){
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -36,6 +37,10 @@
                 @Html.ActionLink("Habilitar", "Habilitar", new{Id = item.Id})
             </td>
         </tr>
-}
+}}else{
+        <tr>
+            <td colspan="3">No hay mesas disponibles.</td>
+        </tr>
+        }
     </tbody>
 </table>

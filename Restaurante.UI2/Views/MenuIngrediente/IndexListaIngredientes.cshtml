@@ -9,9 +9,11 @@
     int id = ViewBag.id;
     string Nombre = ViewBag.Nombre;
 }
-<h1><center>Ingredientes de @Nombre</center></h1>
+<h1>
+    <center>Ingredientes de @Nombre</center>
+</h1>
 <hr />
-@Html.ActionLink("Asociar","Asociar",new {id = @id})
+@Html.ActionLink("Asociar", "Asociar", new { id = @id })
 <table class="table">
     <thead>
         <tr>
@@ -28,24 +30,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @{
-                id = item.Id_MenuIngrediente;
-                }
-                @Html.DisplayFor(modelItem => item.NombreDelIngrediente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreDeLaMedida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorAproximado)
-            </td>
-            <td>
-                @Html.ActionLink("Desasociar","Desasociar",new{Id = item.id})
-            </td>
-        </tr>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{
+                            id = item.Id_MenuIngrediente;
+                        }
+                        @Html.DisplayFor(modelItem => item.NombreDelIngrediente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreDeLaMedida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ValorAproximado)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Desasociar", "Desasociar", new { Id = item.id })
+                    </td>
+                </tr>
+            }
 }
+else
+{
+            <tr>
+                <td colspan="4">No hay ingredientes asociados a este platillo.</td>
+            </tr>
+        }
     </tbody>
 </table>

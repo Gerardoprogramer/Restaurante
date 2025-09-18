@@ -12,9 +12,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<Restaurante.BS.IRepositorioDeRestaurante, Restaurante.BS.RepositorioDeRestaurante>();
 builder.Services.AddMemoryCache();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+                       ?? throw new InvalidOperationException("No se encontró la cadena de conexión 'DefaultConnection'");
 builder.Services.AddDbContext<Restaurante.DA.DbContexto>(x => x.UseSqlServer(connectionString));
+
+
 
 var app = builder.Build();
 

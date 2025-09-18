@@ -11,6 +11,12 @@ namespace Restaurante.UI.Controllers
     [Authorize]
     public class MesaOrdenController : Controller
     {
+
+        private readonly string _apiBaseUrl;
+        public MesaOrdenController(IConfiguration configuration)
+        {
+            _apiBaseUrl = configuration.GetValue<string>("ApiBaseUrl");
+        }
         // GET: MesaOrdenController
         public async Task<IActionResult> Index()
         {
@@ -19,7 +25,7 @@ namespace Restaurante.UI.Controllers
             {
                 var httpClient = new HttpClient();
 
-                var response = await httpClient.GetAsync("https://restaurantesi.azurewebsites.net/api/MesaOrden/ObtengaLaListaDelOrdenDeLasMesas");
+                var response = await httpClient.GetAsync($"{_apiBaseUrl}/api/MesaOrden/ObtengaLaListaDelOrdenDeLasMesas");
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 laListaDeOrdenesDeMesa = JsonConvert.DeserializeObject<List<Restaurante.Model.CatalogoDeOrdenes>>(apiResponse);
 
@@ -53,7 +59,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/MesaOrden/ObtengaElMenuParaOrdenar", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/MesaOrden/ObtengaElMenuParaOrdenar", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 OrdenarMesa = JsonConvert.DeserializeObject<Restaurante.Model.OrdenarMesa>(apiResponse);
@@ -95,7 +101,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PostAsync("https://restaurantesi.azurewebsites.net/api/MesaOrden/AgregueLaOrdenALaMesa", byteContent);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/MesaOrden/AgregueLaOrdenALaMesa", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -122,7 +128,7 @@ namespace Restaurante.UI.Controllers
                     ["id"] = id.ToString()
                 };
 
-                var uri = QueryHelpers.AddQueryString("https://restaurantesi.azurewebsites.net/api/MesaOrden/FiltrarPorNombreLaListaAServir", query);
+                var uri = QueryHelpers.AddQueryString($"{_apiBaseUrl}/api/MesaOrden/FiltrarPorNombreLaListaAServir", query);
                 var response = await httpClient.GetAsync(uri);
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 ServirOrden = JsonConvert.DeserializeObject<Restaurante.Model.ServirOrden>(apiResponse);
@@ -160,7 +166,7 @@ namespace Restaurante.UI.Controllers
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                await httpClient.PostAsync("https://restaurantesi.azurewebsites.net/api/MesaOrden/EliminarElPlatilloServido", byteContent);
+                await httpClient.PostAsync($"{_apiBaseUrl}/api/MesaOrden/EliminarElPlatilloServido", byteContent);
 
                 return RedirectToAction(nameof(Index));
             }
