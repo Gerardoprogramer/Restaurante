@@ -4,20 +4,44 @@
     ViewData["Title"] = "Confirmar Registro";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    
-      <a id="confirm-link" href="@Model.EmailConfirmationUrl">Haga clic aquí para confirmar su cuenta</a>
-</p>
-    }
-    else
-    {
-<p>
-        Por favor revise su correo electrónico para confirmar su cuenta.
-</p>
-    }
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm text-center">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="bi bi-check-circle"></i> @ViewData["Title"]</h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.DisplayConfirmAccountLink)
+                    {
+                        <p class="mb-4">
+                            ¡Su cuenta ha sido creada exitosamente!  
+                            <br />
+                            Haga clic en el botón a continuación para confirmar su cuenta:
+                        </p>
+                        <a id="confirm-link" href="@Model.EmailConfirmationUrl" class="btn btn-success btn-lg">
+                            <i class="bi bi-envelope-check"></i> Confirmar Cuenta
+                        </a>
+                    }
+                    else
+                    {
+                        <p class="mb-0">
+                            Por favor revise su correo electrónico para confirmar su cuenta.  
+                            Revise la carpeta de spam si no ve el mensaje.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const card = document.querySelector('.card');
+            card.classList.add('animate__animated', 'animate__fadeIn');
+        });
+    </script>
 }
 

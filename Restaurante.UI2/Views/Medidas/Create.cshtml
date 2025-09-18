@@ -4,28 +4,53 @@
     ViewData["Title"] = "Agregar Medida";
 }
 
-<h4 class="mb-3">Agregar Medida</h4>
-<hr />
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0"><i class="bi bi-plus-circle"></i> Agregar Medida</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" id="medidaForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Nombre" class="form-label fw-bold"></label>
+                            <input asp-for="Nombre" class="form-control form-control-lg" placeholder="Ej: Kilogramo, Litro..." />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
 
-            <div class="mb-3">
-                <label asp-for="Nombre" class="form-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Agregar
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-arrow-left-circle"></i> Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="d-flex gap-2">
-                <input type="submit" value="Agregar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Volver</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        // Validación simple en tiempo real (opcional)
+        document.addEventListener('DOMContentLoaded', function () {
+            const nombreInput = document.querySelector('#Nombre');
+            nombreInput.addEventListener('input', function () {
+                if (this.value.length < 3) {
+                    this.classList.add('is-invalid');
+                } else {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+        });
+    </script>
 }

@@ -4,5 +4,31 @@
     ViewData["Title"] = "Confirmar Cuenta";
 }
 
-<h1>@ViewData["Title"]</h1>
-Su cuenta fue confirmada. Por favor <a asp-page="./Login">Inicie sesión</a>.
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm text-center">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="bi bi-check-circle"></i> @ViewData["Title"]</h3>
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">
+                        🎉 Su cuenta ha sido confirmada exitosamente.
+                    </p>
+                    <a asp-page="./Login" class="btn btn-primary btn-lg">
+                        <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const card = document.querySelector('.card');
+            card.classList.add('animate__animated', 'animate__fadeIn');
+        });
+    </script>
+}
