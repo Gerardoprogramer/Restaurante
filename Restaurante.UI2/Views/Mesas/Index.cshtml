@@ -45,18 +45,20 @@
                                 }
                             </td>
                             <td class="text-center">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                </a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white me-1">
-                                    <i class="bi bi-eye"></i> Detalles
-                                </a>
-                                <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-sm btn-secondary me-1">
-                                    <i class="bi bi-slash-circle"></i> Deshabilitar
-                                </a>
-                                <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-sm btn-success">
-                                    <i class="bi bi-check-circle"></i> Habilitar
-                                </a>
+                                <div class="d-flex flex-wrap justify-content-center gap-1">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">
+                                        <i class="bi bi-eye"></i> Detalles
+                                    </a>
+                                    <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">
+                                        <i class="bi bi-slash-circle"></i> Deshabilitar
+                                    </a>
+                                    <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-sm btn-success">
+                                        <i class="bi bi-check-circle"></i> Habilitar
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }
