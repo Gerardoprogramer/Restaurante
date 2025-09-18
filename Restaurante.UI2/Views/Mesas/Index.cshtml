@@ -1,46 +1,74 @@
 ﻿@model IEnumerable<Restaurante.Model.Mesas>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Mesas";
 }
-<h1><center>Lista de Mesas</center></h1>
-<hr />
-<p>
-    <a asp-action="Create">Agregar Mesa</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@if (Model != null && Model.Any()){
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { Id=item.Id }) |
-                @Html.ActionLink("Detalles", "Details", new { Id=item.Id }) |
-                @Html.ActionLink("Deshabilitar", "Deshabilitar", new{Id = item.Id})|
-                @Html.ActionLink("Habilitar", "Habilitar", new{Id = item.Id})
-            </td>
-        </tr>
-}}else{
-        <tr>
-            <td colspan="3">No hay mesas disponibles.</td>
-        </tr>
-        }
-    </tbody>
-</table>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">🍽️ Lista de Mesas</h1>
+    <hr />
+
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Agregar Mesa
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                        <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                        <th class="text-center" style="width: 280px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td>
+                                @if (item.Estado == Restaurante.Model.EstadoMesas.Disponible)
+                                {
+                                    <span class="badge bg-success">Disponible</span>
+                                }
+                                else if (item.Estado == Restaurante.Model.EstadoMesas.Ocupada)
+                                {
+                                    <span class="badge bg-danger">Ocupada</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@item.Estado</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white me-1">
+                                    <i class="bi bi-eye"></i> Detalles
+                                </a>
+                                <a asp-action="Deshabilitar" asp-route-id="@item.Id" class="btn btn-sm btn-secondary me-1">
+                                    <i class="bi bi-slash-circle"></i> Deshabilitar
+                                </a>
+                                <a asp-action="Habilitar" asp-route-id="@item.Id" class="btn btn-sm btn-success">
+                                    <i class="bi bi-check-circle"></i> Habilitar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary text-center shadow-sm mt-4" role="alert">
+            No hay mesas disponibles.
+        </div>
+    }
+</div>
+

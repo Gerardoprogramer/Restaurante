@@ -2,61 +2,51 @@
 
 @{
     ViewData["Title"] = "IndexListaIngredientes";
-}
-
-
-@{
     int id = ViewBag.id;
     string Nombre = ViewBag.Nombre;
 }
+
 <h1>
     <center>Ingredientes de @Nombre</center>
 </h1>
 <hr />
-@Html.ActionLink("Asociar", "Asociar", new { id = @id })
-<table class="table">
-    <thead>
+
+<p>
+    @Html.ActionLink("➕ Asociar ingrediente", "Asociar", new { id = id }, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreDelIngrediente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreDeLaMedida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorAproximado)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.NombreDelIngrediente)</th>
+            <th>@Html.DisplayNameFor(model => model.NombreDeLaMedida)</th>
+            <th>@Html.DisplayNameFor(model => model.ValorAproximado)</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @if (Model != null && Model.Any())
         {
-            @foreach (var item in Model)
+            foreach (var item in Model)
             {
                 <tr>
+                    <td>@Html.DisplayFor(modelItem => item.NombreDelIngrediente)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NombreDeLaMedida)</td>
                     <td>
-                        @{
-                            id = item.Id_MenuIngrediente;
-                        }
-                        @Html.DisplayFor(modelItem => item.NombreDelIngrediente)
+                        @item.ValorAproximado.ToString("C")
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NombreDeLaMedida)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ValorAproximado)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Desasociar", "Desasociar", new { Id = item.id })
+                        @Html.ActionLink("❌ Desasociar", "Desasociar", new { Id = item.Id_MenuIngrediente }, new { @class = "btn btn-danger btn-sm" })
                     </td>
                 </tr>
             }
-}
-else
-{
+        }
+        else
+        {
             <tr>
-                <td colspan="4">No hay ingredientes asociados a este platillo.</td>
+                <td colspan="4" class="text-center text-muted">
+                    No hay ingredientes asociados a este platillo.
+                </td>
             </tr>
         }
     </tbody>

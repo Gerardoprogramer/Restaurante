@@ -20,7 +20,6 @@ namespace Restaurante.SI.Controllers
         [HttpGet("ObtengaLaListaDeMedidas")]
         public IEnumerable<Restaurante.Model.Medidas> ObtengaLaListaDeMedidas()
         {
-            console.WriteLine("Llego al controladorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
             List<Model.Medidas> elResultado;
             elResultado = ElRepositorio.ObtengaLaListaDeMedidas();
             return elResultado;

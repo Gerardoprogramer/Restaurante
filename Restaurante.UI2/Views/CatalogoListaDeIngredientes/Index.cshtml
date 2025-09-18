@@ -1,59 +1,56 @@
 ﻿@model IEnumerable<Restaurante.Model.CatalogoListaDeIngredientes>
 
 @{
-    ViewData["Title"] = "Index";
-}
-@{
+    ViewData["Title"] = "Ingredientes del Platillo";
     int idMenus = 1;
 }
-<p>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreDelIngrediente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreDeLaMedida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorAproximado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@if (Model != null && Model.Any()){
-    @foreach (var item in Model) {
-            <tr>
-                <td>
 
-                @{idMenus = item.Id_MenuIngrediente;}
-                
+<div class="container mt-4">
+    <h1 class="text-center mb-4">🥗 Ingredientes del Platillo</h1>
+    <hr />
 
-                @Html.DisplayFor(modelItem => item.NombreDelIngrediente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreDeLaMedida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorAproximado)
-            </td>
-            <td>
-                @Html.ActionLink("Desasociar", "Edit", new { id = item.Id_MenuIngrediente })
-            </td>
-        </tr>
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.NombreDelIngrediente)</th>
+                        <th>@Html.DisplayNameFor(model => model.NombreDeLaMedida)</th>
+                        <th class="text-end">@Html.DisplayNameFor(model => model.ValorAproximado)</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        idMenus = item.Id_MenuIngrediente;
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.NombreDelIngrediente)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NombreDeLaMedida)</td>
+                            <td class="text-end">₡@Html.DisplayFor(modelItem => item.ValorAproximado)</td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.Id_MenuIngrediente" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-x-circle"></i> Desasociar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary text-center shadow-sm mt-4" role="alert">
+            No hay ingredientes asociados a este platillo.
+        </div>
+    }
 
-}}else{
-        <tr>
-            <td colspan="4">No hay ingredientes asociados a este platillo.</td>
-        </tr>
-        }
-        <tr>
-            <td colspan="4" style="text-align:center">
-
-@Html.ActionLink("Asociar", "Details","MenuIngrediente",  new { id = idMenus})
-
-    </tbody>
-</table>
+    <div class="text-center mt-4">
+        <a asp-controller="MenuIngrediente" asp-action="Details" asp-route-id="@idMenus" 
+           class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Asociar Ingrediente
+        </a>
+    </div>
+</div>

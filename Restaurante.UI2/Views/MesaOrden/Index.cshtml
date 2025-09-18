@@ -1,38 +1,63 @@
 ﻿@model IEnumerable<Restaurante.Model.CatalogoDeOrdenes>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ordenar Mesa";
 }
-<h1><center>Ordenar Mesa</center></h1>
-<hr />
-<h4>Mesas</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@if (Model != null && Model.Any()){
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Ordenar", "OrdenarMesa", new { id = item.id}) |
-                @Html.ActionLink("Servir", "ServirMesa", new { id = item.id })
-            </td>
-        </tr>
-}}else{
-        <tr>
-            <td colspan="3">No hay mesas disponibles.</td>
-        </tr>
-        }
-    </tbody>
-</table>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">🍽️ Ordenar Mesa</h1>
+    <hr />
+    <h4 class="mb-3">Mesas</h4>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mesa</th>
+                        <th class="text-center" style="width: 200px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayFor(modelItem => item.Nombre)</strong>
+                                <br />
+                                @if (item.Estado == Restaurante.Model.EstadoMesas.Disponible)
+                                {
+                                    <span class="badge bg-success">Disponible</span>
+                                }
+                                else if (item.Estado == Restaurante.Model.EstadoMesas.Ocupada)
+                                {
+                                    <span class="badge bg-danger">Ocupada</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@item.Estado</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="OrdenarMesa" asp-route-id="@item.id" class="btn btn-sm btn-primary me-2">
+                                    <i class="bi bi-bag"></i> Ordenar
+                                </a>
+                                <a asp-action="ServirMesa" asp-route-id="@item.id" class="btn btn-sm btn-success">
+                                    <i class="bi bi-check-circle"></i> Servir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary text-center shadow-sm mt-4" role="alert">
+            No hay mesas disponibles.
+        </div>
+    }
+</div>
+

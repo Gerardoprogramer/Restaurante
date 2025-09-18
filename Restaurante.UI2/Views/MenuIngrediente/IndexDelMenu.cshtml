@@ -3,50 +3,43 @@
 @{
     ViewData["Title"] = "IndexDelMenu";
 }
-<h1>
-    <center>Platillos del Menu</center>
-</h1>
+
+<h1 class="text-center">Platillos del Menú</h1>
 <hr />
-<table class="table">
-    <thead>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GananciasAproximadas)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Precio)</th>
+            <th>@Html.DisplayNameFor(model => model.GananciasAproximadas)</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @if (Model != null && Model.Any())
         {
-            @foreach (var item in Model)
+            foreach (var item in Model)
             {
                 <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@String.Format("{0:C}", item.Precio)</td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
+                        @item.GananciasAproximadas.ToString("C")
                     </td>
+
                     <td>
-                        @Html.DisplayFor(modelItem => item.Precio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GananciasAproximadas)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Ingredientes", "IndexListaIngredientes", new { id=item.Id_MenuIngrediente, Nombre =
-                        item.Nombre})
+                        @Html.ActionLink("Ingredientes", "IndexListaIngredientes",
+                        new { id = item.Id_MenuIngrediente, Nombre = item.Nombre },
+                                new { @class = "btn btn-primary btn-sm" })
             </td>
         </tr>
                 }
-}else
-{
+        }
+        else
+        {
             <tr>
-                <td colspan="4">No hay platillos disponibles.</td>
+                <td colspan="4" class="text-center">No hay platillos disponibles.</td>
             </tr>
         }
     </tbody>
